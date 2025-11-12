@@ -1,20 +1,28 @@
 import random
 import time
 
-OPEARATORS =["+","-","*",]
+OPERATORS = ["+","-","*","/"]
 MIN_OPERAND =3
 MAX_OPERAND =12
 TOTAL_PROBLEMS =10
 
 def generate_problem():
-    left = random.randint(MIN_OPERAND,MAX_OPERAND)
-    right= random.randint(MIN_OPERAND,MAX_OPERAND)
-    operator = random.choice(OPEARATORS)
+    operator = random.choice(OPERATORS)
+    # For division, ensure the result is an integer
+    if operator == "/":
+        right = random.randint(MIN_OPERAND, MAX_OPERAND)
+        answer = random.randint(MIN_OPERAND, MAX_OPERAND)
+        left = right * answer  # ensures left/right = answer is an integer
+    else:
+        left = random.randint(MIN_OPERAND, MAX_OPERAND)
+        right = random.randint(MIN_OPERAND, MAX_OPERAND)
+        expr = f"{left} {operator} {right}"
+        # eval function to dynamically cal results
+        answer = eval(expr)
+        return expr, answer
 
-    expr = str(left) +" "+ operator  +" " + str(right)
-    #eval function to dynamically cal results
-    answer = eval(expr)
-    return expr , answer
+    expr = f"{left} {operator} {right}"
+    return expr, answer
 
 wrong = 0
 input("Press any button to begin...")
